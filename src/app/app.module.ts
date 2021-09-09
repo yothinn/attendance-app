@@ -18,6 +18,10 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
 import { AlertComponent } from './components/alert/alert.component';
 import { SharedModule } from './shared/shared.module';
 
+
+
+
+
 export const MY_FORMATS = {
   parse: {
     dateInput: 'LL'
@@ -34,7 +38,9 @@ export const MY_FORMATS = {
   declarations: [
     AppComponent,
     ConfirmDialogComponent,
-    AlertComponent
+    AlertComponent,
+ 
+
   ],
   imports: [
     BrowserModule,

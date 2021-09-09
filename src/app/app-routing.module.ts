@@ -13,6 +13,10 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path:"attendance",
+    loadChildren: () => import('./modules/attendance/attendance.module').then(m => m.AttendanceModule)
+  },
+  {
     path: '**',
     redirectTo: 'dashboard'
   }
