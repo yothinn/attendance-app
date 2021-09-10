@@ -1,0 +1,45 @@
+@import "~@angular/material/theming";
+@import 'src/styles.scss';
+
+$nav-font-color : rgb(124, 121, 121);
+.contact-container {
+  width: 100%;
+  height: calc(100vh - 70px);
+
+
+  .contact-left-panel {
+    width: 15%;
+    overflow: hidden !important;
+
+
+    .mat-list-option {
+      color: $nav-font-color;
+
+      .mat-icon {
+        margin-top: auto;
+        margin-bottom: auto;
+        padding-right: 10px;
+      }
+
+    }
+
+    .mat-list-single-selected-option {
+      color: mat-color($ng-app-primary);
+    }
+
+  }
+
+  .contact-content-panel {
+    overflow: auto;
+    width: 85%;
+    padding-left: 10px;
+    padding-right: 10px;
+
+  }
+}
+
+.contacts{
+    margin-left: 63%;
+}
+
+

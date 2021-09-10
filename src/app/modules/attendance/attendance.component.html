@@ -1,2 +1,21 @@
-<p>attendance works!</p>
-<app-employee-list></app-employee-list>
+<mat-drawer-container class="contact-container">
+    <mat-drawer fxLayout="column" class="contact-left-panel" mode="side" opened="true" position="start">
+        <app-employee-list></app-employee-list>
+    </mat-drawer>
+
+    <mat-drawer-content class="contact-content-panel" fxLayout="column">
+        <router-outlet></router-outlet>
+            <div fxLayout="row" fxLayoutAlign="center end" class="contacts">        
+                <button (click)="rightSide.toggle()" class="button-right" >
+                    <mat-icon> 
+                        contacts
+                    </mat-icon>
+                </button>
+            </div>
+    </mat-drawer-content>
+
+    <mat-drawer #rightSide mode="side" position='end' opened>
+        <app-employee-profile class="profile"></app-employee-profile>
+    </mat-drawer>
+
+</mat-drawer-container>

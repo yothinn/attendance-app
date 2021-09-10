@@ -1,1 +1,42 @@
-<p>employee-list works!</p>
+<div fxLayoutAlign="end center" >
+    <div class="title">ข้อมูลพนักงาน</div>
+    <div >
+        <button  mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+    </div>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="openDialog()">
+                <mat-icon>person_add</mat-icon>
+                <span>เพิ่มข้อมูลผู้ติดต่อ</span>
+            </button>
+        </mat-menu>
+</div>
+
+<div fxLayoutAlign="center" class="search">
+    <mat-form-field appearance="outline">
+        <mat-label>
+            <mat-icon class="search">search</mat-icon>
+        </mat-label>
+        <input #searchList matInput placeholder="Search...">
+    </mat-form-field>
+</div>
+
+<mat-selection-list [multiple]="false">
+    <mat-list-option class="contact-list">
+        <div fxLayout="row" fxLayoutAlign="space-between stretch">
+            <a class="size-name">
+                <!-- {{item.name}} {{item.lastName}} -->
+            </a>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="space-between stretch">
+            <a class="size-amount">
+            </a>
+            <a class="limit">
+                <!-- วงเงิน {{item.financialAmount | number:"0.2"}} -->
+            </a>
+        </div>
+
+    </mat-list-option>
+</mat-selection-list>
