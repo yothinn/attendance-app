@@ -4,7 +4,6 @@
     </mat-drawer>
 
     <mat-drawer-content class="contact-content-panel" fxLayout="column">
-        <router-outlet></router-outlet>
             <div fxLayout="row" fxLayoutAlign="center end" class="contacts">        
                 <button (click)="rightSide.toggle()" class="button-right" >
                     <mat-icon> 
@@ -12,6 +11,8 @@
                     </mat-icon>
                 </button>
             </div>
+            <app-attendance-table></app-attendance-table>
+            <router-outlet></router-outlet>
     </mat-drawer-content>
 
     <mat-drawer #rightSide mode="side" position='end' opened>
