@@ -21,7 +21,7 @@ export class EmployeeService {
   createEmployee(body: any): Observable<any> {
     return this.http.post('http://localhost:3000/api/employees', body);
   }
-  updateEmployee(body: any): Observable<any> {
-    return this.http.put(`http://localhost:3000/api/employees/${body._id}`, body);
+  updateEmployee(id,body: any): Observable<any> {
+    return this.http.put(`http://localhost:3000/api/employees/${id}`,body);
   }
 }

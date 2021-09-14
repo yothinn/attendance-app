@@ -1,18 +1,21 @@
-.title{
-    font-size: 20px;
-}
 
-.search{
-    width: 100%;
-}
-
-// .avatar{
-//     width: 35px;
-//     height: 35px;
-//     border-radius: 80%;
-//     margin-right: 10px;
+// .search{
+//   width: 100%;
 // }
 
-.header-list{
-  width: 100%;
+
+.mat-toolbar-left {
+  font-size: 1.1rem;
+  height: 48px;
+  padding-right: 5px;
+}
+
+.contact-list {
+  height: max-content;border-top: 1px solid rgb(235, 234, 234);
+}
+
+.contact-searchbar {
+  padding-left: 5px;
+  padding-right: 5px;
+  background-color: #fff;
 }

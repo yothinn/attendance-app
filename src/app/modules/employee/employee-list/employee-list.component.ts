@@ -36,24 +36,24 @@ export class EmployeeListComponent implements OnInit {
     })
   }
 
-  openDialog(data= null): void {
-    this.employeeDialog = this.dialog.open(AddEmployeeDialogComponent, {
+  openDialog(data): void {
+    const dialogRef  = this.dialog.open(AddEmployeeDialogComponent, {
       width: '300px',
       height: '500px',
       data: data
     });
-    this.employeeDialog.afterClosed().subscribe(result => {
-      if (result) {
-        this.activeEmployee = result.data;
-        this.employeeService.getEmployee()
-          .pipe(takeUntil(this._unsubscribeAll))
-          .subscribe((res: any) => {
-            // console.log(res.data);
-            this.alertService.showSuccess("บันทึกข้อมูลสำเร็จ")
-            this.contacts = res.data;
-          });
-      }
-    });
+    // this.employeeDialog.afterClosed().subscribe(result => {
+    //   if (result) {
+    //     this.activeEmployee = result.data;
+    //     this.employeeService.getEmployee()
+    //       .pipe(takeUntil(this._unsubscribeAll))
+    //       .subscribe((res: any) => {
+    //         // console.log(res.data);
+    //         this.alertService.showSuccess("บันทึกข้อมูลสำเร็จ")
+    //         this.contacts = res.data;
+    //       });
+    //   }
+    // });
     
   }
 
