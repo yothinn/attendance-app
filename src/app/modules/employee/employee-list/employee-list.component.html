@@ -1,42 +1,34 @@
-<div fxLayoutAlign="end center" >
-    <div class="title">ข้อมูลพนักงาน</div>
-    <div >
-        <button  mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-            <mat-icon>more_vert</mat-icon>
-        </button>
+<mat-toolbar>
+  <small>
+    <div fxLayout="row">
+      <mat-label class="header-list">ข้อมูลรายชื่อพนักงาน</mat-label>
+      <mat-icon [matMenuTriggerFor]="menu" class="menu">
+        <small>more_vert</small>
+      </mat-icon>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="openDialog('')">เพิ่มข้อมูลพนักงาน</button>
+      </mat-menu>
     </div>
-        <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="openDialog()">
-                <mat-icon>person_add</mat-icon>
-                <span>เพิ่มข้อมูลผู้ติดต่อ</span>
-            </button>
-        </mat-menu>
-</div>
+  </small>
+</mat-toolbar>
+<mat-divider></mat-divider>
 
-<div fxLayoutAlign="center" class="search">
-    <mat-form-field appearance="outline">
-        <mat-label>
-            <mat-icon class="search">search</mat-icon>
-        </mat-label>
-        <input #searchList matInput placeholder="Search...">
-    </mat-form-field>
-</div>
 
-<mat-selection-list [multiple]="false">
-    <mat-list-option class="contact-list">
-        <div fxLayout="row" fxLayoutAlign="space-between stretch">
-            <a class="size-name">
-                <!-- {{item.name}} {{item.lastName}} -->
-            </a>
-        </div>
-
-        <div fxLayout="row" fxLayoutAlign="space-between stretch">
-            <a class="size-amount">
-            </a>
-            <a class="limit">
-                <!-- วงเงิน {{item.financialAmount | number:"0.2"}} -->
-            </a>
-        </div>
-
-    </mat-list-option>
-</mat-selection-list>
+  <mat-form-field class="search" appearance="fill">
+    <mat-label>ค้นรายชื่อพนักงาน</mat-label>
+    <input #search matInput placeholder="กรุณาพิมพ์รายชื่อพนักงาน">
+  </mat-form-field>
+  <div *ngFor="let item of dataemployee">
+    {{item.firstName}} {{item.lastName}}
+    <div fxLayout="row" fxLayoutAlign="end" fxFlex="100">
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="openDialog(activeEmployee)">
+          <mat-icon>edit</mat-icon>
+          <span>แก้ไข</span>
+        </button>
+      </mat-menu>
+    </div>
+  </div>

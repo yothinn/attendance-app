@@ -14,7 +14,5 @@ export class AttendanceComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  toggleRight(): void {
-    this.right.toggle();
-  }
+
 }

@@ -6,14 +6,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { EmployeeModule } from 'src/app/modules/employee/employee.module';
 import { AttendanceTableComponent } from './attendance-table/attendance-table.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { FormbaseService } from 'src/app/shared/components/formbase/formbase.service';
 
 
 
 const routes: Routes = [
   {
     path:'',
-    component:AttendanceComponent
-
+    component:AttendanceComponent,
+    resolve: [FormbaseService]
   }
 ]
 
@@ -23,7 +24,9 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     EmployeeModule,
-    SharedModule
+    SharedModule,
+
+    
 
   ]
 })

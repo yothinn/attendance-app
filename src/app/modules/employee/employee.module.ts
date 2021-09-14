@@ -6,14 +6,14 @@ import { EmployeeProfileComponent } from './employee-profile/employee-profile.co
 import { SharedModule } from 'src/app/shared/shared.module';
 
 
-
 @NgModule({
   declarations: [ AddEmployeeDialogComponent, EmployeeListComponent, EmployeeProfileComponent],
   imports: [
-    CommonModule, SharedModule
+    CommonModule,
+    SharedModule,
   
   ],
-  exports:[CommonModule,AddEmployeeDialogComponent, EmployeeListComponent, EmployeeProfileComponent]
+  exports:[CommonModule, EmployeeListComponent, EmployeeProfileComponent]
 
 })
 export class EmployeeModule { }
