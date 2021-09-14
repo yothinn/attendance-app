@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDrawer } from '@angular/material/sidenav';
+import { Component, OnInit} from '@angular/core';
+
 
 @Component({
   selector: 'app-attendance',
@@ -7,12 +7,11 @@ import { MatDrawer } from '@angular/material/sidenav';
   styleUrls: ['./attendance.component.scss']
 })
 export class AttendanceComponent implements OnInit {
-  @ViewChild('rightSide') right: MatDrawer;
+
   
   constructor() { }
 
   ngOnInit(): void {
   }
-
 
 }

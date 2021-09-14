@@ -9,9 +9,36 @@
         <button mat-menu-item (click)="openDialog('')">เพิ่มข้อมูลพนักงาน</button>
       </mat-menu>
     </div>
+<<<<<<< HEAD
   </small>
 </mat-toolbar>
 <mat-divider></mat-divider>
+=======
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="openAddEmployeeDialog()">
+                <mat-icon>person_add</mat-icon>
+                <span>เพิ่มข้อมูลผู้ติดต่อ</span>
+            </button>
+        </mat-menu>
+</div>
+
+<div fxLayoutAlign="center" class="search">
+    <mat-form-field appearance="outline">
+        <mat-label>
+            <mat-icon class="search">search</mat-icon>
+        </mat-label>
+        <input #searchList matInput placeholder="Search...">
+    </mat-form-field>
+</div>
+
+<mat-selection-list [multiple]="false">
+    <mat-list-option class="contact-list">
+        <div fxLayout="row" fxLayoutAlign="space-between stretch">
+            <a class="size-name">
+                <!-- {{item.name}} {{item.lastName}} -->
+            </a>
+        </div>
+>>>>>>> 9c794b52cf71cfea345c0f14ff5610e31f0120c2
 
 
   <mat-form-field class="search" appearance="fill">

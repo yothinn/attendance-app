@@ -29,8 +29,11 @@
     </mat-drawer>
 
     <mat-drawer-content class="contact-content-panel" fxLayout="column">
+<<<<<<< HEAD
         <router-outlet></router-outlet>
        
+=======
+>>>>>>> 9c794b52cf71cfea345c0f14ff5610e31f0120c2
             <div fxLayout="row" fxLayoutAlign="center end" class="contacts">        
                 <button (click)="rightSide.toggle()" class="button-right" >
                     <mat-icon> 
@@ -38,8 +41,13 @@
                     </mat-icon>
                 </button>
             </div>
+<<<<<<< HEAD
 
             <app-attendance-table></app-attendance-table>
+=======
+            <app-attendance-table></app-attendance-table>
+            <router-outlet></router-outlet>
+>>>>>>> 9c794b52cf71cfea345c0f14ff5610e31f0120c2
     </mat-drawer-content>
 
     <mat-drawer #rightSide mode="side" position='end' opened>
