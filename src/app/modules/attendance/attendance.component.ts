@@ -1,4 +1,7 @@
 import { Component, OnInit} from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { AttendanceService } from 'src/app/services/attendance.service';
+import { AttendanceDialogComponent } from './attendance-dialog/attendance-dialog.component';
 
 
 @Component({
@@ -8,10 +11,23 @@ import { Component, OnInit} from '@angular/core';
 })
 export class AttendanceComponent implements OnInit {
 
-  
-  constructor() { }
+  attendanceData:any;
+
+  constructor(public dialog: MatDialog,
+    private attendanceService: AttendanceService ) { }
 
   ngOnInit(): void {
+    this.attendanceService.getAttendance().subscribe((res:any) =>{
+      this.attendanceData = res.data;
+    })
+  }
+
+  openDialog(data): void {
+    const dialogRef  = this.dialog.open(AttendanceDialogComponent, {
+      width: '300px',
+      height: '500px',
+      data: data
+    });
   }
 
 }

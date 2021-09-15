@@ -1,89 +1,52 @@
 <mat-toolbar class="mat-toolbar-left">
-  <div fxFill fxLayout="row" fxLayoutAlign="start center">
-    <div fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
-      <span>ข้อมูลผู้ติดต่อ</span>
-    </div>
-      <button mat-icon-button [matMenuTriggerFor]="menuCreateAndCreate">
-        <mat-icon>more_vert</mat-icon>
-      </button>
-      <mat-menu #menuCreateAndCreate="matMenu">
-        <button mat-menu-item (click)="openDialog('')">
-          <mat-icon>person_add</mat-icon>
-          <span>เพิ่มข้อมูลผู้ติดต่อ</span>
-        </button>
-      </mat-menu>
-  </div>
-</mat-toolbar>
-
-<div class="contact-searchbar">
-
-  <mat-form-field  appearance="legacy" fxFill>
-    <mat-label>ค้นรายชื่อพนักงาน</mat-label>
-    <input #search matInput placeholder="กรุณาพิมพ์รายชื่อพนักงาน">
-  </mat-form-field>
-
-</div>
-
-
-<div *ngFor="let item of dataemployee">
-  <mat-selection-list [multiple]="false" >
-    <mat-list-option>
-      <div fxLayoutAlign="start start" fxFlex>
-        {{item.firstName}} {{item.lastName}}
-
-        <div fxLayout="row" fxLayoutAlign="end" fxFlex="100">
-          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-            <mat-icon>more_vert</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="openDialog(item)">
-              <mat-icon>edit</mat-icon>
-              <span>แก้ไข</span>
-            </button>
-          </mat-menu>
-        </div>
+    <div fxFill fxLayout="row" fxLayoutAlign="start center">
+      <div fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
+        <span>ข้อมูลผู้ติดต่อ</span>
       </div>
-    </mat-list-option>
-  </mat-selection-list>
-</div>
-
-
-<!-- <mat-toolbar>
-  <small>
-    <div fxLayout="row">
-      <mat-label class="header-list">ข้อมูลรายชื่อพนักงาน</mat-label>
-      <mat-icon [matMenuTriggerFor]="menu" class="menu">
-        <small>more_vert</small>
-      </mat-icon>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="openDialog('')">เพิ่มข้อมูลพนักงาน</button>
-      </mat-menu>
-    </div>
-  </small>
-</mat-toolbar>
-<mat-divider></mat-divider>
-
-
-<mat-form-field class="search" appearance="fill">
-  <mat-label>ค้นรายชื่อพนักงาน</mat-label>
-  <input #search matInput placeholder="กรุณาพิมพ์รายชื่อพนักงาน">
-</mat-form-field>
-
-<div *ngFor="let item of dataemployee" >
-  <mat-selection-list >
-    <div fxLayoutAlign="start start" fxFlex>
-      {{item.firstName}} {{item.lastName}}
-    </div>
-      <div fxLayout="row" fxLayoutAlign="end" fxFlex="100">
-        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <button mat-icon-button [matMenuTriggerFor]="menuCreateAndCreate">
           <mat-icon>more_vert</mat-icon>
         </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="openDialog(item)">
-            <mat-icon>edit</mat-icon>
-            <span>แก้ไข</span>
+        <mat-menu #menuCreateAndCreate="matMenu">
+          <button mat-menu-item (click)="openDialog('')">
+            <mat-icon>person_add</mat-icon>
+            <span>เพิ่มข้อมูลผู้ติดต่อ</span>
           </button>
         </mat-menu>
-      </div>
-  </mat-selection-list>
-</div> -->
+    </div>
+  </mat-toolbar>
+  
+  <div class="contact-searchbar">
+  
+    <mat-form-field  appearance="legacy" fxFill>
+      <mat-label>ค้นรายชื่อพนักงาน</mat-label>
+      <input #search matInput (keyup)="onSearch($event)" placeholder="กรุณาพิมพ์รายชื่อพนักงาน">
+    </mat-form-field>
+  
+  </div>
+  
+  
+  <div *ngFor="let item of filterList">
+    <mat-selection-list [multiple]="false" >
+      <mat-list-option>
+        <div fxLayoutAlign="start start" fxFlex>
+            {{item.firstName}} {{item.lastName}}<br>
+            {{item.position}}
+  
+          <div fxLayout="row" fxLayoutAlign="end">
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="openDialog(item)">
+                <mat-icon>edit</mat-icon>
+                <span>แก้ไข</span>
+              </button>
+            </mat-menu>
+          </div>
+        </div>
+      </mat-list-option>
+    </mat-selection-list>
+  </div>
+  
+  
+   
