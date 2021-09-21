@@ -55,22 +55,15 @@ export class AttendanceDialogComponent implements OnInit {
 
   onSubmit(): void {
     let payLoad = this.form.getRawValue();
-
     console.log(payLoad);
-
-    if (!this.data) {
-
+      payLoad['id'] = this.data.info.customerId;
       console.log(payLoad);
       this.attendanceService.createAttendance(payLoad).subscribe((res: any) => {
-        this.dialogRef.close(res);
-      })
-    } else {
-      this.attendanceService.updateAttendance(this.data._id,payLoad).subscribe(res => {
-        console.log(res);
-        this.dialogRef.close(res);
-      })
-    }
+         }) 
+     this.dialogRef.close(true);
 
   }
+
+
 
 }

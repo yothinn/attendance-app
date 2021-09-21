@@ -1,15 +1,65 @@
 <mat-drawer-container>
 
     <mat-drawer fxLayout="column"  mode="side" opened="true" position="start">
-        <app-employee-list></app-employee-list>
+        <!-- MOVE CODE -->
+        <mat-toolbar class="mat-toolbar-left">
+            <div fxFill fxLayout="row" fxLayoutAlign="start center">
+              <div fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
+                <span>ข้อมูลผู้ติดต่อ</span>
+              </div>
+                <button mat-icon-button [matMenuTriggerFor]="menuCreateAndCreate">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menuCreateAndCreate="matMenu">
+                  <button mat-menu-item (click)="openDialogAddEmployeeDialog('')">
+                    <mat-icon>person_add</mat-icon>
+                    <span>เพิ่มข้อมูลผู้ติดต่อ</span>
+                  </button>
+                </mat-menu>
+            </div>
+          </mat-toolbar>
+          
+          <div class="contact-searchbar">
+          
+            <mat-form-field  appearance="legacy" fxFill>
+              <mat-label>ค้นรายชื่อพนักงาน</mat-label>
+              <input #search matInput  placeholder="กรุณาพิมพ์รายชื่อพนักงาน">
+            </mat-form-field>
+          
+          </div>
+          
+          
+          <div>
+            <mat-selection-list [multiple]="false" >
+              <mat-list-option  *ngFor="let item of employeeData" (click)="chooseContact(item)">
+                <div fxLayoutAlign="start start" fxFlex >
+                    <span>{{item.firstName}} {{item.lastName}}</span> <br>
+                    <span>{{item.position}}</span>
+          
+                  <div fxLayout="row" fxLayoutAlign="end">
+                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                      <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                      <button mat-menu-item (click)="openDialogAddEmployeeDialog(item)">
+                        <mat-icon>edit</mat-icon>
+                        <span>แก้ไข</span>
+                      </button>
+                    </mat-menu>
+                  </div>
+                </div>
+              </mat-list-option>
+            </mat-selection-list>
+          </div>
+           <!-- MOVE CODE -->
    </mat-drawer>
 
     <mat-drawer #rightSide mode="side" position='end' opened>
         <app-employee-profile class="profile"></app-employee-profile>
     </mat-drawer>
     
-    <mat-drawer-container class="middle">
-        <button (click)="openDialog('')">Attendance</button>
+    <mat-drawer-container class="middle"  *ngIf="activeEmployee"> 
+        <button (click)="openAttendanceDialog('')">Attendance</button>
             <div class="button-right">
                 <button (click)="rightSide.toggle()" >
                     <mat-icon>
@@ -17,33 +67,9 @@
                     </mat-icon>
                 </button>
             </div>
-
+            <app-attendance-table [employeeId]="activeEmployee._id"></app-attendance-table>
     </mat-drawer-container>
 </mat-drawer-container>
 
 
 
-<!-- <mat-drawer-container class="contact-container">
-    <mat-drawer fxLayout="column" class="contact-left-panel" mode="side" opened="true" position="start">
-         <app-employee-list></app-employee-list>
-    </mat-drawer>
-
-    <mat-drawer-content class="contact-content-panel" fxLayout="column">
-        <router-outlet></router-outlet>
-       
-            <div fxLayout="row" fxLayoutAlign="center end" class="contacts">        
-                <button (click)="rightSide.toggle()" class="button-right" >
-                    <mat-icon> 
-                        contacts
-                    </mat-icon>
-                </button>
-            </div>
-
-            <app-attendance-table></app-attendance-table>
-    </mat-drawer-content>
-
-    <mat-drawer #rightSide mode="side" position='end' opened>
-        <app-employee-profile class="profile"></app-employee-profile>
-    </mat-drawer>
-
-</mat-drawer-container> -->
