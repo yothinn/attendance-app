@@ -12,7 +12,7 @@ mat-drawer{
 }
 
 .button-right{
-  margin-left:95%;
+  margin-left:90%;
 }
 
 //  .button-left{
@@ -38,4 +38,30 @@ mat-drawer{
   padding-left: 5px;
   padding-right: 5px;
   background-color: #fff;
+}
+
+.toolbar{
+  height: 10vh;
+}
+.search{
+  height: 10vh;
+}
+.name{
+  width: 100%;
+}
+.employee-list{
+  height: 15vh;
+}
+.scrol{
+  height: 73vh;
+  overflow: auto !important;
+}
+.field-search{
+  width: 95%;
+}
+.avatar{
+    width: 35px;
+    height: 35px;
+    border-radius: 80%;
+    margin-right: 10px;
 }

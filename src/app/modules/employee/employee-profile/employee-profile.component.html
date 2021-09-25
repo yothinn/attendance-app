@@ -1,3 +1,13 @@
-<div fxLayoutAlign="center" class="avatar">
-    <mat-icon >account_circle</mat-icon>
+
+<div fxLayoutAlign="center center" > 
+    <img [src] = " test + employees?.imageUrl.src" style= width:80% class="avatar">
 </div>
+
+
+<a fxLayoutAlign="start center"><mat-icon>account_circle</mat-icon>{{employees?.firstName}} {{employees?.lastName}}</a><br>
+<a fxLayoutAlign="start center"><mat-icon>work</mat-icon> {{employees?.position}}</a><br>
+<a fxLayoutAlign="start center"><mat-icon>phone</mat-icon> {{employees?.tel}}</a><br>
+<a fxLayoutAlign="start center"><mat-icon>room</mat-icon>
+    {{employees?.addr01}} {{employees?.street}} {{employees?.subDistrict}}
+    {{employees?.district}} {{employees?.province}} {{employees?.zip}}  
+</a><br>

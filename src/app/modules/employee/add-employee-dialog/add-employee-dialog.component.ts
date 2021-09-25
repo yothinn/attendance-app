@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA,  } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
@@ -6,6 +6,8 @@ import { map, takeUntil } from 'rxjs/operators';
 import { Formbase } from 'src/app/shared/components/formbase/formbase';
 import { FormbaseService } from 'src/app/shared/components/formbase/formbase.service';
 import { EmployeeService } from 'src/app/services/employee.service';
+import { UploadService} from 'src/app/services/upload.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-add-employee-dialog',
@@ -16,6 +18,10 @@ export class AddEmployeeDialogComponent implements OnInit {
   formBase: Formbase<string>[] = [];
   form: FormGroup;
   layout: any;
+  image: any; 
+  @Input() employees: any; 
+  // test =  environment.apiUrl + "/api/";
+
   private _unsubscribeAll: Subject<any>;
 
   constructor(private employeeService:  EmployeeService,
@@ -23,6 +29,7 @@ export class AddEmployeeDialogComponent implements OnInit {
               private fb: FormBuilder,
               private formBaseService: FormbaseService,
               @Inject(MAT_DIALOG_DATA) public data: any,
+              private uploadService: UploadService,
               
     ) { 
       this._unsubscribeAll = new Subject();
@@ -58,6 +65,7 @@ export class AddEmployeeDialogComponent implements OnInit {
 
   onSubmit(): void {
     let payLoad = this.form.getRawValue();
+    payLoad.imageUrl = this.image  
 
     console.log(payLoad);
 
@@ -66,6 +74,7 @@ export class AddEmployeeDialogComponent implements OnInit {
       console.log(payLoad);
       this.employeeService.createEmployee(payLoad).subscribe((res: any) => {
         this.dialogRef.close(res);
+
       })
     } else {
       this.employeeService.updateEmployee(this.data._id,payLoad).subscribe(res => {
@@ -74,6 +83,17 @@ export class AddEmployeeDialogComponent implements OnInit {
       })
     }
 
+  }
+
+  onFileUpload(event) {
+    const file = event.target.files[0];
+    console.log(file);
+    const formData = new FormData();
+    formData.append('file',file);
+    this.uploadService.uploadFile('employees', formData).subscribe((res) =>{
+      this.image = res
+      console.log(res)
+    })
   }
 
 }
