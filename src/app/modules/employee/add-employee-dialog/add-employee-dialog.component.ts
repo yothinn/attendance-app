@@ -1,8 +1,8 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA,  } from '@angular/material/dialog';
-import { Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { forkJoin, of, Subject } from 'rxjs';
+import { concatMap, map, takeUntil } from 'rxjs/operators';
 import { Formbase } from 'src/app/shared/components/formbase/formbase';
 import { FormbaseService } from 'src/app/shared/components/formbase/formbase.service';
 import { EmployeeService } from 'src/app/services/employee.service';
@@ -15,10 +15,17 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./add-employee-dialog.component.scss']
 })
 export class AddEmployeeDialogComponent implements OnInit {
+  readonly UPLOADSUB_EMOLOYEE = "employees";
+
   formBase: Formbase<string>[] = [];
   form: FormGroup;
   layout: any;
+
+  isNew:boolean;
+  isChangeImage:boolean;
+  imageFile:any;
   image: any; 
+
   @Input() employees: any; 
   // test =  environment.apiUrl + "/api/";
 
@@ -52,9 +59,19 @@ export class AddEmployeeDialogComponent implements OnInit {
         this.layout = layouts[0];
         this.formBase = this.layout?.forms;
         console.log(this.data);
-        this.form = this.formBaseService.toFormGroup(this.formBase, this.data);
+        this.form = this.formBaseService.toFormGroup(this.formBase, this.data.info);
       
       });
+      console.log(this.data);
+    if (this.data.info === "") {
+      this.isNew = true;
+      this.image = null;
+    } else {
+      this.isNew = false;
+      this.image = this.data.info?.imageUrl?.src || null;
+    }
+    
+    this.isChangeImage = false;
   }
 
 
@@ -64,36 +81,77 @@ export class AddEmployeeDialogComponent implements OnInit {
   }
 
   onSubmit(): void {
-    let payLoad = this.form.getRawValue();
-    payLoad.imageUrl = this.image  
+    let payload = this.form.getRawValue();
+    console.log(payload);
+    console.log(this.data.info.customerId);
 
-    console.log(payLoad);
+    let upload$;
 
-    if (!this.data) {
+    if (this.isChangeImage) {
+      const formData = new FormData();
+      formData.append('file', this.imageFile);
+      console.log(this.isChangeImage);
+      upload$ = this.uploadService.uploadFile(this.UPLOADSUB_EMOLOYEE, formData);
 
-      console.log(payLoad);
-      this.employeeService.createEmployee(payLoad).subscribe((res: any) => {
-        this.dialogRef.close(res);
-
-      })
     } else {
-      this.employeeService.updateEmployee(this.data._id,payLoad).subscribe(res => {
-        console.log(res);
-        this.dialogRef.close(res);
-      })
+      upload$ = of({});
     }
+    forkJoin({
+      upload: upload$
+
+    }).pipe(
+      takeUntil(this._unsubscribeAll),
+      concatMap((result: any) => {
+        console.log(result);
+        if (this.data.info === "") {
+          // console.log('create');
+          payload['id'] = this.data.info.customerId;
+          payload['imageUrl'] = result.upload;
+          return this.employeeService.createEmployee(payload);
+        } else {
+          if (this.isChangeImage) {
+            payload['imageUrl'] = result.upload;
+          }
+          return this.employeeService.updateEmployee(this.data.info._id, payload);
+        }
+      }),
+    ).subscribe(res => {
+      console.log(res);
+      this.dialogRef.close(true);
+    });
+
 
   }
 
   onFileUpload(event) {
     const file = event.target.files[0];
-    console.log(file);
-    const formData = new FormData();
-    formData.append('file',file);
-    this.uploadService.uploadFile('employees', formData).subscribe((res) =>{
-      this.image = res
-      console.log(res)
-    })
+    // console.log(files);
+
+    let maxSize = environment.maxupload;         // size in MB
+    let fileSize = file.size / 1024 / 1024            // convert to MB
+
+    if (fileSize >= maxSize) {
+      // TODO : how to manage error !!!!
+      throw new Error(`File Size is too large. Allowed file size is ${maxSize}MB`);
+    }
+
+    this.isChangeImage = true;
+    this.imageFile = file;
+
+    let fileReader = new FileReader();
+    fileReader.onload = (event) => {
+      this.image = fileReader.result;
+      console.log(this.image);
+    };
+    fileReader.readAsDataURL(file);
+  }
+
+  displayImage() {
+    if (this.isNew) {
+      return this.image;
+    } else {
+      return (this.isChangeImage) ? this.image : `${environment.apiUrl}/api/${this.image}`;
+    }
   }
 
 }

@@ -10,16 +10,19 @@
         </div>
     </mat-toolbar>
 
-    <div>
-        <mat-card (click)="fileUpload.click()" class="card">
+    <div fxLayoutAlign="center">
+        <mat-card (click)="fileUpload.click()" class="card" >
             <!-- <p>Add Image</p> -->
             <div fxLayoutAlign="center" fxFlex="1 0 auto">
-                <div mat-card-avatar class="avatar-profile" 
+                <!-- <div mat-card-avatar class="avatar-profile" 
                     style="background-image: url('https://img-premium.flaticon.com/png/512/552/premium/552848.png?token=exp=1632382873~hmac=0c4998c46f73e2680881cc8125de0621');">
-                </div>
-                <!-- <div mat-card-avatar class="avatar-profile" *ngIf="employees?.imageUrl"
-                    style="background-image: url('{{employees?.imageUrl}}');">
+                </div>  -->
+                <!-- <div fxLayout="row" fxLayoutAlign="center" class="display-image">
+                    <img fxLayoutAlign="center" *ngIf="!image" [src]="test + image.src">
                 </div> -->
+                <div fxLayout="row" fxLayoutAlign="center" class="image">
+                    <img fxLayoutAlign="center" *ngIf="image" [src]="displayImage()">
+                </div>
             </div>
         </mat-card>
         <input type="file" #fileUpload (change)="onFileUpload($event)" hidden />
@@ -31,7 +34,9 @@
 
 
     <div fxFlex="0 1 auto" fxLayoutAlign="center end" style="margin: 20px 0 20px 0;">
-        <button mat-raised-button color="primary" (click)='onSubmit()'>ยืนยัน</button>
+        <button mat-raised-button color="primary" (click)='onSubmit()' [disabled]="!form?.valid">
+            ยืนยัน
+        </button>
     </div>
 
 

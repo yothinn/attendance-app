@@ -90,7 +90,10 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnChanges, On
     const dialogRef = this.dialog.open(AddEmployeeDialogComponent, {
       width: '300px',
       height: '500px',
-      data: data
+      data: {
+        isNew: true,
+        info:data
+      }
     });
   }
 

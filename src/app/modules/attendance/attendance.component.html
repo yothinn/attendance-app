@@ -32,21 +32,6 @@
               <img [src]=" test + item.imageUrl.src" class="avatar">
               {{item.firstName}} {{item.lastName}}
             </a>
-            <div fxLayoutAlign="end">
-              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-                <mat-icon>more_vert</mat-icon>
-              </button>
-              <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="openDialogAddEmployeeDialog(item)">
-                  <mat-icon>edit</mat-icon>
-                  <span>edit</span>
-                </button>
-                <button mat-menu-item (click)="deleteEmployee(item)">
-                  <mat-icon>delete</mat-icon>
-                  <span>delete</span>
-                </button>
-              </mat-menu>
-            </div>
           </div>
         </mat-list-option>
       </mat-selection-list>
@@ -55,6 +40,17 @@
   </mat-drawer>
 
   <mat-drawer #rightSide mode="side" position='end' [opened]="activeEmployee">
+    <div fxLayoutAlign="end">
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="openDialogAddEmployeeDialog(activeEmployee)">
+          <mat-icon>edit</mat-icon>
+          <span>edit</span>
+        </button>
+      </mat-menu>
+    </div>
     <app-employee-profile [employees]="activeEmployee" class="profile"></app-employee-profile>
   </mat-drawer>
 
