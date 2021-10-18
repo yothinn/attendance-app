@@ -29,8 +29,10 @@
         <mat-list-option class="employee-list" *ngFor="let item of employeeList" (click)="chooseContact(item)">
           <div fxLayout="row" fxLayoutAlign="space-between stretch" >
             <a class="name" fxLayoutAlign="start center"> 
-              <img [src]=" test + item.imageUrl.src" class="avatar">
-              {{item.firstName}} {{item.lastName}}
+              <img *ngIf="!item.imageUrl" src="https://cdn-icons.flaticon.com/png/512/552/premium/552848.png?token=exp=1634020390~hmac=af4abae926bb71da823824f0521079d5" class="avatar">
+              <img *ngIf="item.imageUrl" [src]=" test + item.imageUrl.src" class="avatar">
+              {{item.firstName}} {{item.lastName}}<br>
+              {{item.position}}
             </a>
           </div>
         </mat-list-option>

@@ -1,7 +1,8 @@
 <div fxLayout="column" fxFlexFill class="dialog-container">
     <mat-toolbar fxLayout="row" fxFlex="0 1 auto" fxLayoutAlign="start">
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex>
-            <div fxFlex="1 0 auto">{{layout?.value}}</div>
+            <span fxFlex="1 0 auto" *ngIf="!data.info">{{layout?.value}}</span>
+            <span fxFlex="1 0 auto" *ngIf="data.info">แก้ไขข้อมูล</span>
             <div fxFlex="0 1 auto">
                 <button type="button" aria-label="Toggle sidenav" (click)="onClose()" mat-icon-button>
                     <mat-icon aria-label="Side nav toggle icon">close</mat-icon>
@@ -10,30 +11,22 @@
         </div>
     </mat-toolbar>
 
-    <div fxLayoutAlign="center">
-        <mat-card (click)="fileUpload.click()" class="card" >
-            <!-- <p>Add Image</p> -->
-            <div fxLayoutAlign="center" fxFlex="1 0 auto">
-                <!-- <div mat-card-avatar class="avatar-profile" 
-                    style="background-image: url('https://img-premium.flaticon.com/png/512/552/premium/552848.png?token=exp=1632382873~hmac=0c4998c46f73e2680881cc8125de0621');">
-                </div>  -->
-                <!-- <div fxLayout="row" fxLayoutAlign="center" class="display-image">
-                    <img fxLayoutAlign="center" *ngIf="!image" [src]="test + image.src">
-                </div> -->
-                <div fxLayout="row" fxLayoutAlign="center" class="image">
-                    <img fxLayoutAlign="center" *ngIf="image" [src]="displayImage()">
+    <div>
+        <mat-card (click)="fileUpload.click()" class="card" fxLayoutAlign="center center" fxLayout="column" >
+            <p class="add" *ngIf="!data.info">Press to add a picture.</p>
+                <div fxLayout="row" fxLayoutAlign="center center" class="image">
+                    <img  *ngIf="image" [src]="displayImage()">
                 </div>
-            </div>
         </mat-card>
         <input type="file" #fileUpload (change)="onFileUpload($event)" hidden />
     </div>
 
-    <div fxFlex="1 0 auto" *ngFor="let control of formBase">
+    <div  *ngFor="let control of formBase">
         <app-formbase [form]="form" [control]="control"></app-formbase>
     </div>
 
 
-    <div fxFlex="0 1 auto" fxLayoutAlign="center end" style="margin: 20px 0 20px 0;">
+    <div  fxLayoutAlign="center end" style="margin: 20px 0 20px 0;">
         <button mat-raised-button color="primary" (click)='onSubmit()' [disabled]="!form?.valid">
             ยืนยัน
         </button>

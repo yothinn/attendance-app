@@ -1,6 +1,8 @@
 
 <div fxLayoutAlign="center center" > 
-    <img [src] = " test + employees?.imageUrl.src" style= width:80% class="avatar">
+    <img *ngIf="!employees?.imageUrl" src="https://cdn-icons.flaticon.com/png/512/552/premium/552848.png?token=exp=1634020390~hmac=af4abae926bb71da823824f0521079d5" class="avatar">
+    <img *ngIf="employees?.imageUrl" [src] = " test + employees?.imageUrl.src" style= width:80% class="avatar">
+    <!-- <img [src] = " test + employees?.imageUrl.src" style= width:80% class="avatar"> -->
 </div>
 
 

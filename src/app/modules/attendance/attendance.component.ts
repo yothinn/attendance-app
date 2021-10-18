@@ -136,7 +136,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnChanges, On
         this.isSearching = true;
         return (e.target as HTMLInputElement).value
       }),
-      filter(text => text.length >= 3),
+      filter(text => text.length >= 2),
       debounceTime(300),
       distinctUntilChanged(),
       // send request to search user

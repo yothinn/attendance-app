@@ -24,7 +24,8 @@ export class AddEmployeeDialogComponent implements OnInit {
   isNew:boolean;
   isChangeImage:boolean;
   imageFile:any;
-  image: any; 
+  image: any;
+  default:any = "uploads/employees/user-1632299889161.png"; 
 
   @Input() employees: any; 
   // test =  environment.apiUrl + "/api/";
@@ -58,17 +59,17 @@ export class AddEmployeeDialogComponent implements OnInit {
         console.log(layouts)
         this.layout = layouts[0];
         this.formBase = this.layout?.forms;
-        console.log(this.data);
+        // console.log(this.data);
         this.form = this.formBaseService.toFormGroup(this.formBase, this.data.info);
       
       });
       console.log(this.data);
     if (this.data.info === "") {
       this.isNew = true;
-      this.image = null;
+      this.image = `${environment.apiUrl}/api/` + this.default;
     } else {
       this.isNew = false;
-      this.image = this.data.info?.imageUrl?.src || null;
+      this.image = this.data.info?.imageUrl?.src || this.default;
     }
     
     this.isChangeImage = false;
@@ -83,21 +84,31 @@ export class AddEmployeeDialogComponent implements OnInit {
   onSubmit(): void {
     let payload = this.form.getRawValue();
     console.log(payload);
-    console.log(this.data.info.customerId);
+    // console.log(this.data.info.customerId);
 
     let upload$;
-
+    let delete$;
+    
     if (this.isChangeImage) {
+
+      if (this.data.info.imageUrl) {
+        delete$ = this.uploadService.deleteFile('employees', this.data.info.imageUrl.name);
+      } else {
+        delete$ = of({});
+      }
       const formData = new FormData();
       formData.append('file', this.imageFile);
       console.log(this.isChangeImage);
-      upload$ = this.uploadService.uploadFile(this.UPLOADSUB_EMOLOYEE, formData);
-
+      upload$ = this.uploadService.uploadFile(this.UPLOADSUB_EMOLOYEE, formData) ;
+      console.log(upload$)
     } else {
       upload$ = of({});
+      delete$ = of({});
+      console.log(upload$)
     }
     forkJoin({
-      upload: upload$
+      delete: delete$,
+      upload: upload$ 
 
     }).pipe(
       takeUntil(this._unsubscribeAll),
@@ -150,7 +161,7 @@ export class AddEmployeeDialogComponent implements OnInit {
     if (this.isNew) {
       return this.image;
     } else {
-      return (this.isChangeImage) ? this.image : `${environment.apiUrl}/api/${this.image}`;
+      return (this.isChangeImage) ? this.image : `${environment.apiUrl}/api/${this.image}`  ;
     }
   }
 
