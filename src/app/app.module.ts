@@ -22,6 +22,7 @@ import { SharedModule } from './shared/shared.module';
 
 
 
+
 export const MY_FORMATS = {
   parse: {
     dateInput: 'LL'
@@ -49,7 +50,7 @@ export const MY_FORMATS = {
     BrowserAnimationsModule,
     HttpClientModule,
     SharedModule,
-    Layout1Module
+    Layout1Module,
   ],
   providers: [
     { provide: ErrorHandler, useClass: GlobalErrorHandler },

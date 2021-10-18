@@ -50,6 +50,7 @@ import { VerticalTimelineModule } from 'angular-vertical-timeline';
 import { MatChipsModule } from '@angular/material/chips';
 
 
+
 @NgModule({
   declarations: [FormbaseComponent, TablebaseComponent, SelecterComponent],
   imports: [
@@ -84,6 +85,7 @@ import { MatChipsModule } from '@angular/material/chips';
     MatAutocompleteModule,
     MatStepperModule,
     MatChipsModule,
+   
 
     NgxSpinnerModule,
     NgxBarcode6Module,
