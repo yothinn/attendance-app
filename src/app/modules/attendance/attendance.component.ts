@@ -95,19 +95,35 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnChanges, On
         info:data
       }
     });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.activeEmployee = result.data;
+        this.employeeService.getEmployees()
+          .pipe(takeUntil(this._unsubscribeAll))
+          .subscribe((res: any) => {
+            // console.log(res.data);
+            // this.alertService.showSuccess("บันทึกข้อมูลสำเร็จ")
+            this.employeeList = res.data;
+          });
+      }
+    });
   }
 
   loadEmployee() {
+    console.log(this.currentPage)
     this.employeeService.getEmployees(this.currentPage)
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((res: any) => {
+        console.log(res.data)
         if (this.currentPage === 1) {
           this.employeeList = res.data;
         } else {
           if (res.data.length > 0) {
             this.employeeList = this.employeeList.concat(res.data);
           }
-
+          else{
+            this.currentPage--
+          }
         }
       });
   }
@@ -159,6 +175,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnChanges, On
 
   cancelSearch(): void {
     console.log('cancel search');
+    this.currentPage = 1;
     this.isSearching = false;
     this.searchRef.nativeElement.value = '';
 
@@ -170,6 +187,20 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnChanges, On
   chooseContact(data): void {
     this.activeEmployee = data;
     console.log(data)
+  }
+
+  uploadExcel(event) {
+    const file = event.target.files[0];
+    console.log(file);
+    const form = new FormData();
+    form.append('file', file);
+    console.log(form);
+
+    this.employeeService.uploadEmployee(form)
+      .subscribe((res: any) => {
+        console.log(res);
+        this.loadEmployee();
+      })
   }
 
 

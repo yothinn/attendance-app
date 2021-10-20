@@ -2,12 +2,24 @@
 
   <mat-drawer fxLayout="column" mode="side" opened="true" position="start">
 
-    <div>
-      <button mat-menu-item (click)="openDialogAddEmployeeDialog('')">
-        <mat-icon>person_add</mat-icon>
-        <span>เพิ่มข้อมูลผู้ใช้</span>
+    <div fxLayoutAlign="end center" >
+      <span class="textuser">ข้อมูลพนักงาน</span>
+      <button mat-button [matMenuTriggerFor]="menuadd">
+        <mat-icon>more_vert</mat-icon>
       </button>
+      <mat-menu #menuadd ="matMenu">
+        <button mat-menu-item (click)="openDialogAddEmployeeDialog('')">
+          <mat-icon>person_add</mat-icon>
+          <span>เพิ่มข้อมูลผู้ใช้</span>
+        </button>
+        <button  mat-menu-item (click)="selectFile.click()">
+          <mat-icon>upload_file</mat-icon>
+          <span>upload file</span>
+          <input id="file-input" #selectFile style="display: none;" type="file" (change)="uploadExcel($event)">
+        </button>
+      </mat-menu>
     </div>
+
 
     <div fxLayoutAlign="center" class="search">
       <mat-form-field appearance="outline" class="field-search">
@@ -24,12 +36,14 @@
     </div>
     <mat-divider></mat-divider>
 
-    <div class="scrol" #contactList >
-      <mat-selection-list [multiple]="false" >
+    <div class="scrol" #contactList>
+      <mat-selection-list [multiple]="false">
         <mat-list-option class="employee-list" *ngFor="let item of employeeList" (click)="chooseContact(item)">
-          <div fxLayout="row" fxLayoutAlign="space-between stretch" >
-            <a class="name" fxLayoutAlign="start center"> 
-              <img *ngIf="!item.imageUrl" src="https://cdn-icons.flaticon.com/png/512/552/premium/552848.png?token=exp=1634020390~hmac=af4abae926bb71da823824f0521079d5" class="avatar">
+          <div fxLayout="row" fxLayoutAlign="space-between stretch">
+            <a class="name" fxLayoutAlign="start center">
+              <img *ngIf="!item.imageUrl"
+                src="https://cdn-icons.flaticon.com/png/512/552/premium/552848.png?token=exp=1634020390~hmac=af4abae926bb71da823824f0521079d5"
+                class="avatar">
               <img *ngIf="item.imageUrl" [src]=" test + item.imageUrl.src" class="avatar">
               {{item.firstName}} {{item.lastName}}<br>
               {{item.position}}
