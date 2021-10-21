@@ -19,8 +19,8 @@ export class EmployeeService {
 
   constructor(private http: HttpClient) { }
 
-  getEmployee(): Observable<any> {
-    return this.http.get('http://localhost:3000/api/employees');
+  getEmployee(id: any): Observable<any> {
+    return this.http.get(`http://localhost:3000/api/employees/${id}`);
   }
 
   getEmployees(pageNo = 1, size = 5): Observable<any>{
@@ -47,5 +47,9 @@ export class EmployeeService {
         .subscribe((res: any) => {
          this.onDataChanged$.next(res.data);
         })
+    }
+
+    uploadEmployee(file): Observable<any>{
+      return this.http.post('http://localhost:3000/api/employees/uploads', file);
     }
 }

@@ -126,12 +126,11 @@ export class AddEmployeeDialogComponent implements OnInit {
           return this.employeeService.updateEmployee(this.data.info._id, payload);
         }
       }),
-    ).subscribe(res => {
-      console.log(res);
-      this.dialogRef.close(true);
-    });
-
-
+      
+              ).subscribe(res => {
+                console.log(res);
+                this.dialogRef.close(true);
+              })
   }
 
   onFileUpload(event) {
