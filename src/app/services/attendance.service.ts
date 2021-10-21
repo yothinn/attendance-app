@@ -13,18 +13,15 @@ export class AttendanceService {
 
   constructor(private http: HttpClient) { }
 
-  getAttendance(pageNo = 1, size = 25, employeetId): Observable<Attendance> {
-    return this.http.get<Attendance>(`http://localhost:4000/api/attendances?query=${employeetId}&pageNo=${pageNo}&size=${size}`).pipe
+  getAttendance(pageNo , size , employeeId): Observable<Attendance> {
+    console.log(employeeId)
+    return this.http.get<Attendance>(`http://localhost:4000/api/attendances?employeeId=${employeeId}&pageNo=${pageNo}&size=${size}`).pipe
     (
       map((result:any) => {
         result.data = result.data.map(item => Object.assign(new Attendance(), item) )
         return result;
       })
     );
-  }
-
-  getDataAttendance(): Observable<any> {
-    return this.http.get('http://localhost:4000/api/attendances');
   }
 
   createAttendance(body: any): Observable<any> {
@@ -41,7 +38,9 @@ export class AttendanceService {
     return this.http.put(`http://localhost:4000/api/attendances/${id}`,body);
   }
 
-
+  getAttendanceData(): Observable<any> {
+    return this.http.get('http://localhost:4000/api/attendances');
+  }
   
 
   

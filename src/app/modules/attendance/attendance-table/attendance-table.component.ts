@@ -1,8 +1,10 @@
 import { AfterViewInit, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AttendanceService } from 'src/app/services/attendance.service';
 import { Attendance } from '../attendance';
+import { AttendanceDialogComponent } from '../attendance-dialog/attendance-dialog.component';
 
 
 @Component({
@@ -23,13 +25,17 @@ export class AttendanceTableComponent implements OnInit, AfterViewInit, OnChange
   timeOut: any;
   totalTime: any;
 
+
+  
+  pageNo: number = 1;
+  pageSize: number = 10;
+
   table: any = {
     displayedColumns: [
       "no",
-      // "type",
-      "workIn",
-      "workOut",
-      "workTime"
+      "type",
+      "date",
+      "time"
     ],
 
     columns: [
@@ -38,31 +44,25 @@ export class AttendanceTableComponent implements OnInit, AfterViewInit, OnChange
         "value": "ลำดับ",
       },
       {
-        "key": "workIn",
-        "value": "เข้างาน",
-        "controlType": "time"
-      },
-      {
-        "key": "workOut",
-        "value": "ออกงาน",
-        "controlType": "time"
-      },
-      {
         "key": "type",
         "value": "เข้างาน-ออกงาน",
       },
       {
-        "key": "workTime",
-        "value": "เวลาการทำงาน",
-        "controlType": "time"
+        "key": "date",
+        "value": "วัน/เดือน/ปี",
+        "controlType":"datetime"
       },
-
-
+      {
+        "key": "time",
+        "value": "เวลา",
+        "controlType":"time"
+      }
     ]
   }
   private _unsubscribeAll: Subject<any>;
 
-  constructor(private attendanceService: AttendanceService) {
+  constructor(private attendanceService: AttendanceService,
+              public dialog: MatDialog) {
     this._unsubscribeAll = new Subject();
     this.test = new Attendance();
   }
@@ -94,13 +94,33 @@ export class AttendanceTableComponent implements OnInit, AfterViewInit, OnChange
   }
 
   loadItemList() {
-    this.attendanceService.getAttendance(1, 10, this.employeeId)
+    this.attendanceService.getAttendance(this.pageNo, this.pageSize,this.employeeId)
+      .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((res: any) => {
         console.log(res)
         this.employee = res;
-        this.totalTime = this.test.findSum(res.data);
+        // this.totalTime = this.test.findSum(res.data);
         console.log( this.totalTime)
       }); 
+  }
+
+  openAttendanceDialog(): void {
+    // console.log(data)
+    const dialogRef = this.dialog.open(AttendanceDialogComponent, {
+      width: '300px',
+      height: '500px',
+      data: 
+      {
+        isNew: true,
+        info: {
+          date:new Date(Date.now()),
+          // time:'',
+          customerId: this.employeeId,
+          // contact: `${this.activeEmployee.firstName} ${this.activeEmployee.lastName} `,
+          no: '---------- AUTO GEN ----------'
+        }
+      }
+    });
   }
 
   // findSum(data){
@@ -128,11 +148,12 @@ export class AttendanceTableComponent implements OnInit, AfterViewInit, OnChange
   //      this.totalTime =  {hour: hours, minute: minutes}
        
   //    }    
-   
-
-
   // }
-
+  onPageEventChanged(event: any): void {
+    this.pageNo = event.pageIndex + 1;
+    this.pageSize = event.pageSize;
+    this.loadItemList();
+  }
 
   
 }

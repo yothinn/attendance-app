@@ -18,10 +18,6 @@ export class AttendanceDialogComponent implements OnInit {
   formBase: Formbase<string>[] = [];
   layout: any;
   form: FormGroup;
-  work: Array<any> = [{ name: "เข้างาน" }, { name: "ออกงาน" }];
-  status:boolean=true;
-  attendanceData:any;
-
 
   private _unsubscribeAll: Subject<any>;
   constructor(private attendanceService: AttendanceService,
@@ -38,23 +34,22 @@ export class AttendanceDialogComponent implements OnInit {
           
 
   ngOnInit(): void {
-    this.attendanceService.getDataAttendance().subscribe((res:any)=>{
-      this.attendanceData = res.data;
-    })
 
     this.formBaseService.layoutChangedObservable$
     .pipe(
       takeUntil(this._unsubscribeAll),
-      map(layouts => { return layouts.filter(layout => layout.key === 'attendance1') })
+      map(layouts => { return layouts.filter(layout => layout.key === 'attendance') })
     )
     .subscribe((layouts) => {
       this.layout = layouts[0];
       this.formBase = this.layout?.forms;
       console.log(this.data);
       this.form = this.formBaseService.toFormGroup(this.formBase, this.data.info);
-      this.form.addControl('workIn',this.fb.control(this.data?.workIn || ''));
-      this.form.addControl('workOut',this.fb.control(this.data?.workOut||''));
+      this.form.addControl('time',this.fb.control(this.data?.time || ''));
+      this.form.addControl('date',this.fb.control(this.data?.date || ''));
       this.form.addControl('type',this.fb.control(this.data?.type || ''));
+      
+     
     });
 
 
@@ -65,105 +60,18 @@ export class AttendanceDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-//   onSubmit(): void {
-//     let payLoad = this.form.getRawValue();
-//     console.log(payLoad);
-//       payLoad['id'] = this.data.info.customerId;
-//       console.log(payLoad);
-
-//      {this.attendanceService.createAttendance(payLoad).subscribe((res: any) => {
-//          }) 
-//      this.dialogRef.close(true);
-
-//   }
-// }
-
-  // onSubmit(): void {
-  //   let payLoad = this.form.getRawValue();
-  //   // console.log(payLoad);
-  //   payLoad['id'] = this.data.info.customerId;
-
-  //   if (payLoad.type ==="เข้างาน"){
-  //     this.attendanceService.createAttendance(payLoad).subscribe((res: any) => {
-  //   }) 
-  //       this.dialogRef.close(true)
-  //   } 
-  //   else {
-  //     this.attendanceService.updateAttendance(this.data._id,payLoad).subscribe(res => {
-  //       console.log(this.data);
-       
-  //     }) 
-  //     this.dialogRef.close(true);
-  //   }
-  //  }
-
-  //  onSubmit(): void {
-  //   let payLoad = this.form.getRawValue();
-  //   payLoad['id'] = this.data.info.customerId;  
-
-  //   console.log(payLoad);
-  //   if (this.data) {
-  //     console.log(payLoad)
-  //     this.attendanceService.createAttendance(payLoad).subscribe((res: any) => {
-  //     this.dialogRef.close(res);
-  //     console.log()
-  //     })
-  //   }  
-  //   else {
-  //     this.attendanceService.updateAttendance(this.data[0].info._id,payLoad).subscribe(res => {
-  //       console.log(res);
-  //       this.dialogRef.close(res);
-  //     })
-      
-  //   }
-
-  // }
-
   onSubmit(): void {
     let payLoad = this.form.getRawValue();
-    payLoad['id'] = this.data.info.customerId;  
-
-    console.log(this.form.getRawValue());
-    console.log(this.data)
-
-    if (payLoad.type ==="เข้างาน") {
-
+    console.log(payLoad);
+      payLoad['employeeId'] = this.data.info.customerId;
       console.log(payLoad);
-      this.attendanceService.createAttendance(payLoad).subscribe((res: any) => {
 
-        this.dialogRef.close(res);
-
-      })
-    }
-      else {
-        console.log(this.data)
-       this.attendanceService.updateAttendance(this.attendanceData[0]._id, payLoad).subscribe((res:any) =>{
-        this.dialogRef.close(res);
-       });
-    }
+     {this.attendanceService.createAttendance(payLoad).subscribe((res: any) => {
+         }) 
+     this.dialogRef.close(true);
 
   }
+}
 
-  onSelectWorkIn(){
-    this.status = true;
-    // console.log(this.status)
-  }
-
-  onSelectWorkOut(){
-    this.status = false;
-    // console.log(this.status)
-  }
-
-  onSelect(item){
-    console.log(item)
-    if(item.name==="เข้างาน"){
-      this.onSelectWorkIn()
-    }
-    else{
-      this.onSelectWorkOut()
-    }
-  }
-
-
-
+ 
 }

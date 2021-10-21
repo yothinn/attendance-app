@@ -82,7 +82,8 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnChanges, On
       {
         isNew: true,
         info: {
-          // workIn: this.attendanceData[0].workIn,
+          date:new Date(Date.now()),
+          time:'',
           customerId: this.activeEmployee._id,
           contact: `${this.activeEmployee.firstName} ${this.activeEmployee.lastName} `,
           no: '---------- AUTO GEN ----------'
@@ -94,8 +95,8 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnChanges, On
 
   openDialogAddEmployeeDialog(data): void {
     const dialogRef = this.dialog.open(AddEmployeeDialogComponent, {
-      width: '300px',
-      height: '500px',
+      width: '25%',
+      height: '70%',
       data: {
         isNew: true,
         info:data

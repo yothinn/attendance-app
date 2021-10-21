@@ -7,10 +7,11 @@ import { AttendanceTableComponent } from './attendance-table/attendance-table.co
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AttendanceRoutingModule } from 'src/app/modules/attendance/attendance-routing.module';
 import { MatTimepickerModule } from 'mat-timepicker';
+import { AttendanceSummaryComponent } from './attendance-summary/attendance-summary.component';
 
 
 @NgModule({
-  declarations: [AttendanceComponent, AttendanceDialogComponent,AttendanceTableComponent],
+  declarations: [AttendanceComponent, AttendanceDialogComponent,AttendanceTableComponent, AttendanceSummaryComponent],
   imports: [
     CommonModule,
     EmployeeModule,

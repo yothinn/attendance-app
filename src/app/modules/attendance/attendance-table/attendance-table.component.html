@@ -1,7 +1,7 @@
 <div fxLayout="column" fxFlex="100">
-    <app-tablebase  [dataSource]="employee" [table]="table"  >
-
-     
+    
+    <app-tablebase  [dataSource]="employee" [table]="table"  
+    (onPageEventChanged) = "onPageEventChanged($event)"  >
     </app-tablebase>
 
 </div>

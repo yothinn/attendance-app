@@ -21,31 +21,23 @@
         <form [formGroup]="form" fxLayout="column">
 
 
-            <mat-radio-group formControlName="type" >  
-                <mat-radio-button (click)="onSelect(item)" [value]="item.name" *ngFor="let item of work" >{{item.name}}</mat-radio-button>
-            </mat-radio-group >
+            <mat-radio-group formControlName="type">
+                <mat-radio-button value="เข้างาน"  >เข้างาน</mat-radio-button>
+                <mat-radio-button value="ออกงาน" >ออกงาน</mat-radio-button>
+              </mat-radio-group>
         
 
-            <mat-card  *ngIf="status">
+            <mat-card >
                 <div fxLayout="row">
-                    <input matTimepicker formControlName="workIn"  placeholder="เข้างาน">
+                    <input matTimepicker formControlName="time" placeholder="กรุณาเลือกเวลา">
                     <mat-icon #picker>schedule</mat-icon>
                 </div>
             </mat-card> 
-         
-            <mat-card *ngIf="!status">
-                <div fxLayout="row">
-                    <input matTimepicker formControlName="workOut"  placeholder="ออกงาน">
-                    <mat-icon #picker>schedule</mat-icon>
-                </div>
-            </mat-card> 
-
 
         </form>
     </div>
 
     <div fxFlex="0 1 auto" fxLayoutAlign="center end" style="margin: 20px 0 20px 0;"  >
-        <button mat-raised-button color="primary" (click)='onSubmit()'>เข้างาน</button>
-        <!-- <button mat-raised-button color="primary" (click)='onSubmit()'>ออกงาน</button> -->
+        <button mat-raised-button color="primary" (click)='onSubmit()'>ยืนยัน</button>
     </div>
 </div>
