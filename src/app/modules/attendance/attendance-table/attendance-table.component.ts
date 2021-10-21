@@ -45,7 +45,7 @@ export class AttendanceTableComponent implements OnInit, AfterViewInit, OnChange
       {
         "key": "workOut",
         "value": "ออกงาน",
-       
+        "controlType": "time"
       },
       {
         "key": "type",

@@ -6,7 +6,6 @@ import { AlertService } from 'src/app/alert.service';
 import { AttendanceService } from 'src/app/services/attendance.service';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { environment } from 'src/environments/environment';
-import { sortAndDeduplicateDiagnostics } from 'typescript';
 import { AddEmployeeDialogComponent } from '../employee/add-employee-dialog/add-employee-dialog.component';
 import { AttendanceDialogComponent } from './attendance-dialog/attendance-dialog.component';
 
@@ -28,8 +27,6 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnChanges, On
 
   currentTabIndex: number = 0;
   currentPage = 1;
-  getDataAttendance:any;
-
 
   // number of data that loaded
   readonly PAGESIZE = 5;
@@ -52,16 +49,14 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnChanges, On
   }
 
   ngOnInit(): void {
+  //   this.attendanceService.getDataAttendance().subscribe((res:any)=>{
+  //     this.attendanceData = res.data[0].filter((res) =>{
+  //       return res.type === "เข้างาน"
+  //     }) 
+      
+  //   })
+  //  console.log(this.attendanceData)
     this.loadEmployee();
-      // this.employeeService.getEmployee().subscribe((res: any) => {
-      // this.employeeData = res.data;
-      // })
-      this.attendanceService.getDataAttendance().subscribe((res: any) => {
-        this.getDataAttendance = res.data.type;
-        console.log(this.getDataAttendance)
-      });
-
-   
   }
 
   ngOnDestroy(): void {
@@ -78,26 +73,23 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnChanges, On
     this.onScrollEmployeeList();
   }
 
-  openAttendanceDialog(data): void {
-    console.log();
+  openAttendanceDialog(): void {
+    // console.log(data)
     const dialogRef = this.dialog.open(AttendanceDialogComponent, {
       width: '300px',
       height: '500px',
-      data: {        
+      data: 
+      {
         isNew: true,
-        // info:data
         info: {
-          // dateTime:  new Date(Date.now()),
-          // workIn:new Date(Date.now()),
-          workOut:new Date(Date.now()),
-          // customerId: this.activeEmployee._id,
-          // contact: `${this.activeEmployee.firstName} ${this.activeEmployee.lastName} `,
+          // workIn: this.attendanceData[0].workIn,
+          customerId: this.activeEmployee._id,
+          contact: `${this.activeEmployee.firstName} ${this.activeEmployee.lastName} `,
           no: '---------- AUTO GEN ----------'
-        },
-      } 
+        }
+      }
     });
   }
-
 
 
   openDialogAddEmployeeDialog(data): void {

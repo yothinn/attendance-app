@@ -20,6 +20,7 @@ export class AttendanceDialogComponent implements OnInit {
   form: FormGroup;
   work: Array<any> = [{ name: "เข้างาน" }, { name: "ออกงาน" }];
   status:boolean=true;
+  attendanceData:any;
 
 
   private _unsubscribeAll: Subject<any>;
@@ -37,6 +38,10 @@ export class AttendanceDialogComponent implements OnInit {
           
 
   ngOnInit(): void {
+    this.attendanceService.getDataAttendance().subscribe((res:any)=>{
+      this.attendanceData = res.data;
+    })
+
     this.formBaseService.layoutChangedObservable$
     .pipe(
       takeUntil(this._unsubscribeAll),
@@ -51,6 +56,8 @@ export class AttendanceDialogComponent implements OnInit {
       this.form.addControl('workOut',this.fb.control(this.data?.workOut||''));
       this.form.addControl('type',this.fb.control(this.data?.type || ''));
     });
+
+
   }
 
   
@@ -114,23 +121,25 @@ export class AttendanceDialogComponent implements OnInit {
 
   onSubmit(): void {
     let payLoad = this.form.getRawValue();
-    // payLoad['id'] = this.data.info.customerId;  
+    payLoad['id'] = this.data.info.customerId;  
 
-    console.log(payLoad);
+    console.log(this.form.getRawValue());
     console.log(this.data)
 
     if (payLoad.type ==="เข้างาน") {
 
       console.log(payLoad);
       this.attendanceService.createAttendance(payLoad).subscribe((res: any) => {
+
         this.dialogRef.close(res);
 
       })
-    } else {
-      this.attendanceService.updateAttendance(this.data.info._id,payLoad).subscribe(res => {
-        console.log(res);
+    }
+      else {
+        console.log(this.data)
+       this.attendanceService.updateAttendance(this.attendanceData[0]._id, payLoad).subscribe((res:any) =>{
         this.dialogRef.close(res);
-      })
+       });
     }
 
   }
