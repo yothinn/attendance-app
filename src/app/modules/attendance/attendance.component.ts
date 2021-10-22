@@ -21,6 +21,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnChanges, On
   attendanceData: any;
   employeeData: any;
   test = environment.apiUrl + "/api/";
+  avatarDefault = `${environment.apiUrl}/api/` + "uploads/employees/user-1632299889161.png";
 
   employeeList: Array<any>;
   activeEmployee: any;
@@ -111,6 +112,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnChanges, On
             // console.log(res.data);
             // this.alertService.showSuccess("บันทึกข้อมูลสำเร็จ")
             this.employeeList = res.data;
+            this.currentPage = 1;
           });
       }
     });
@@ -159,7 +161,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnChanges, On
         this.isSearching = true;
         return (e.target as HTMLInputElement).value
       }),
-      filter(text => text.length >= 2),
+      filter(text => text.length >= 3),
       debounceTime(300),
       distinctUntilChanged(),
       // send request to search user
@@ -206,6 +208,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnChanges, On
     this.employeeService.uploadEmployee(form)
       .subscribe((res: any) => {
         console.log(res);
+        this.currentPage = 1;
         this.loadEmployee();
       })
   }

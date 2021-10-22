@@ -1,12 +1,12 @@
 
 <div fxLayoutAlign="center center" > 
-    <img *ngIf="!employees?.imageUrl" src="https://upload.wikimedia.org/wikipedia/commons/f/f4/User_Avatar_2.png" class="avatar">
-    <img *ngIf="employees?.imageUrl" [src] = " test + employees?.imageUrl.src" style= width:80% class="avatar">
+    <img *ngIf="!employees?.imageUrl" [src]= "avatarDefault" class="avatar">
+    <img *ngIf="employees?.imageUrl" [src] = " cloud + employees?.imageUrl.src" style= width:80% class="avatar">
     <!-- <img [src] = " test + employees?.imageUrl.src" style= width:80% class="avatar"> -->
 </div>
 
 
-<a fxLayoutAlign="start center"><mat-icon>account_circle</mat-icon>{{employees?.firstName}} {{employees?.lastName}}</a><br>
+<a fxLayoutAlign="start center"><mat-icon>account_circle</mat-icon>{{employees?.title}} {{employees?.firstName}} {{employees?.lastName}}</a><br>
 <a fxLayoutAlign="start center"><mat-icon>work</mat-icon> {{employees?.position}}</a><br>
 <a fxLayoutAlign="start center"><mat-icon>phone</mat-icon> {{employees?.tel}}</a><br>
 <a fxLayoutAlign="start center"><mat-icon>room</mat-icon>

@@ -38,8 +38,8 @@ export class EmployeeService {
 
   
   searchEmployee(text:any):Observable<any>{
-    // console.log(text);
-      return this.http.get(`http://localhost:3000/api/employees/search?query=${text}`);
+    console.log(text);
+      return this.http.get(`http://localhost:3000/api/employees?query=${text}`);
     } 
 
     getEmployeeById(id: any): void {

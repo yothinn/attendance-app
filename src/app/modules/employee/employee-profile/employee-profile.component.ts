@@ -12,7 +12,8 @@ import { environment } from 'src/environments/environment';
 export class EmployeeProfileComponent implements OnInit {
   employeeData: any;
   @Input() employees: any; 
-  test = environment.apiUrl + "/api/";
+  avatarDefault = `${environment.apiUrl}/api/` + "uploads/employees/user-1632299889161.png";
+  cloud = `${environment.apiUrl}/api/`;
 
   private _unsubscribeAll: Subject<any>;
   constructor( private employeeService: EmployeeService,

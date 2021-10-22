@@ -1,9 +1,11 @@
 <mat-drawer-container>
 
   <mat-drawer fxLayout="column" mode="side" opened="true" position="start">
-      
+
     <div fxLayoutAlign="end center">
-      <span class="textuser"> <mat-icon class="iconContact">perm_contact_calendar</mat-icon>ข้อมูลพนักงาน</span>
+      <span class="textuser" fxLayoutAlign="space-between center">
+        <mat-icon class="iconContact">perm_contact_calendar</mat-icon>ข้อมูลพนักงาน
+      </span>
       <button mat-button [matMenuTriggerFor]="menuadd">
         <mat-icon>more_vert</mat-icon>
       </button>
@@ -41,8 +43,7 @@
         <mat-list-option class="employee-list" *ngFor="let item of employeeList" (click)="chooseContact(item)">
           <div fxLayout="row" fxLayoutAlign="space-between stretch">
             <a class="name" fxLayoutAlign="start center">
-              <img *ngIf="!item.imageUrl" src="https://upload.wikimedia.org/wikipedia/commons/f/f4/User_Avatar_2.png"
-                class="avatar">
+              <img *ngIf="!item.imageUrl" [src]="avatarDefault" class="avatar">
               <img *ngIf="item.imageUrl" [src]=" test + item.imageUrl.src" class="avatar">
               {{item.firstName}} {{item.lastName}}<br>
               {{item.position}}
@@ -68,7 +69,7 @@
     </div>
     <app-employee-profile [employees]="activeEmployee" class="profile"></app-employee-profile>
   </mat-drawer>
-  
+
   <mat-drawer-content fxLayout="column" *ngIf="activeEmployee">
 
 
@@ -93,7 +94,7 @@
       </mat-tab>
 
       <mat-tab label="สรุปรายการ">
-       <app-attendance-summary></app-attendance-summary>
+        <app-attendance-summary></app-attendance-summary>
       </mat-tab>
 
     </mat-tab-group>
